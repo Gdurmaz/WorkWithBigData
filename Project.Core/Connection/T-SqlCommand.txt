@@ -1,0 +1,53 @@
+﻿create database BigData
+go 
+use BigData
+go 
+create table tblKisiler
+(
+ID int identity(1,1) primary key,
+Isim nvarchar(30),
+Soyisim nvarchar(30),
+EmailAdres nvarchar(60),
+Telefon nvarchar(20),
+Resim varbinary(max)
+)
+go
+create proc sp_KisiEkle
+(
+@Isim nvarchar(30),
+@Soyisim nvarchar(30),
+@EmailAdres nvarchar(60),
+@Telefon nvarchar(20),
+@Resim varbinary(max)
+)
+as
+begin
+insert into tblKisiler (Isim,Soyisim,EmailAdres,Telefon,Resim)
+values (@Isim,@Soyisim,@EmailAdres,@Telefon,@Resim)
+end
+
+create proc sp_KisiGüncelle
+(
+@ID int,
+@Isim nvarchar(30),
+@Soyisim nvarchar(30),
+@EmailAdres nvarchar(60),
+@Telefon nvarchar(20),
+@Resim varbinary
+)as
+begin 
+update tblKisiler set 
+Isim=@Isim,
+Soyisim=@Soyisim,
+EmailAdres=@EmailAdres,
+Telefon=@Telefon,
+Resim=@Resim where ID=@ID 
+end
+
+create proc sp_KisiSil
+(
+@ID int
+)as
+begin
+delete from tblKisiler where ID=@ID
+end
